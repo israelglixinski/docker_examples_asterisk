@@ -1,0 +1,26 @@
+docker pull ubuntu
+docker run -it --name ubuntu1 -p 5060:5060/udp -p 10000-10100:10000-10100/udp ubuntu
+docker exec -it ubuntu1 /bin/bash
+
+
+apt update && apt upgrade -y
+apt install -y wget build-essential subversion git-core libjansson-dev libxml2-dev libncurses5-dev uuid-dev libssl-dev libedit-dev libsqlite3-dev
+
+
+
+
+cd /usr/src
+wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-20-current.tar.gz
+tar -zxvf asterisk-20-current.tar.gz
+cd asterisk-20.*
+
+
+
+./configure
+make menuselect
+--------make menuselect.makeopts--------
+make
+make install
+make samples
+make config
+ldconfig

@@ -1,0 +1,63 @@
+docker build -t asterisk-debian-21 .
+
+docker run -d --name asterisk-server -p 5060:5060/udp -p 10000-10100:10000-10100/udp asterisk-debian-21
+
+
+
+
+docker run -it --name ubuntu1 -p 5060:5060/udp -p 10000-10100:10000-10100/udp ubuntu
+
+
+
+
+
+-------------------------------------------------------------
+
+
+
+
+
+
+
+ubunto
+
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y build-essential wget libxml2-dev libncurses5-dev uuid-dev libsqlite3-dev libjansson-dev libssl-dev pkg-config
+cd /usr/src/
+sudo wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-21-current.tar.gz
+sudo tar zxvf asterisk-21-current.tar.gz
+cd asterisk-21.*/
+sudo contrib/scripts/install_prereq install
+sudo contrib/scripts/get_mp3_source.sh
+
+sudo ./configure
+sudo make menuselect
+#####! Navegue até Add-ons e certifique-se de que o format_mp3 esteja selecionado se você instalou o suporte a MP3.
+
+sudo make -j$(nproc)
+sudo make install
+sudo make samples
+
+sudo make progdocs
+
+sudo adduser --quiet --system --home /var/lib/asterisk --no-create-home --group asterisk
+sudo chown -R asterisk:asterisk /var/run/asterisk
+sudo chown -R asterisk:asterisk /var/lib/asterisk
+sudo chown -R asterisk:asterisk /var/log/asterisk
+sudo chown -R asterisk:asterisk /var/spool/asterisk
+sudo chown -R asterisk:asterisk /usr/lib/asterisk
+sudo chown -R asterisk:asterisk /etc/asterisk
+
+
+
+
+
+
+
+
+
+
+
+
